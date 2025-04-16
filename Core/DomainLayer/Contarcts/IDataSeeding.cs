@@ -8,6 +8,6 @@ namespace DomainLayer.Contarcts
 {
     public interface IDataSeeding
     {
-        void SeedData();
+        Task SeedDataAsync();
     }
 }
