@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Presistence.Configrutions
+namespace Presistence.Data.Configrutions
 {
     public class ProductConfigrution : IEntityTypeConfiguration<Product>
     {
@@ -17,11 +17,11 @@ namespace Presistence.Configrutions
                 .WithMany()
                 .HasForeignKey(p => p.BrandId);
 
-            builder.HasOne(P=>P.ProductType)
+            builder.HasOne(P => P.ProductType)
                 .WithMany()
                 .HasForeignKey(p => p.TypeId);
             builder.Property(p => p.Price).HasColumnType("decimal(10,2)");
-                
+
         }
     }
 
