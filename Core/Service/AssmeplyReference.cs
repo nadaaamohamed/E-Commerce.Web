@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DomainLayer.Contarcts
+namespace Service
 {
-    public interface IDataSeeding
+    public class AssmeplyReference
     {
-        Task SeedDataAsync();
     }
 }
