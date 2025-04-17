@@ -3,6 +3,7 @@ using DomainLayer.Contarcts;
 using Microsoft.EntityFrameworkCore;
 using Presistence;
 using Presistence.Data;
+using Presistence.Repositories;
 
 namespace E_Commerce.Web
 {
@@ -21,6 +22,7 @@ namespace E_Commerce.Web
             builder.Services.AddDbContext<StoreDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
+            builder.Services.AddScoped<IUintOfWork, UnitOfWork>();
             #endregion
 
 

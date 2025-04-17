@@ -12,7 +12,7 @@ namespace Presistence.Repositories
     public class UnitOfWork(StoreDbContext _dbContext) : IUintOfWork
     {
         private readonly Dictionary<string , object> _repositories = [];
-        public IGenericRepository<TEntity, Tkey> GenericRepository<TEntity, Tkey>() where TEntity : BaseEntity<Tkey>
+        public IGenericRepository<TEntity, Tkey> GetRepository<TEntity, Tkey>() where TEntity : BaseEntity<Tkey>
         {
             var typename = typeof(TEntity).Name;
             //if (_repositories.ContainsKey(typename))
