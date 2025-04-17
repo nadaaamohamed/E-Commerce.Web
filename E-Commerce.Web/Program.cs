@@ -5,6 +5,7 @@ using Presistence;
 using Presistence.Data;
 using Presistence.Repositories;
 using Service;
+using ServiceAbstraction;
 
 namespace E_Commerce.Web
 {
@@ -25,6 +26,7 @@ namespace E_Commerce.Web
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
             builder.Services.AddScoped<IUintOfWork, UnitOfWork>();
             builder.Services.AddAutoMapper(typeof(Service.AssmeplyReference).Assembly);
+            builder.Services.AddScoped<IServiceManager, ServiceManager>();
             #endregion
 
 
