@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Presistence;
 using Presistence.Data;
 using Presistence.Repositories;
+using Service;
 
 namespace E_Commerce.Web
 {
@@ -23,6 +24,7 @@ namespace E_Commerce.Web
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IDataSeeding, DataSeeding>();
             builder.Services.AddScoped<IUintOfWork, UnitOfWork>();
+            builder.Services.AddAutoMapper(typeof(Service.AssmeplyReference).Assembly);
             #endregion
 
 
