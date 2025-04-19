@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using DomainLayer.Contarcts;
 using DomainLayer.Models;
+using Service.Speceifications;
 using ServiceAbstraction;
+using Shared;
 using Shared.DataTransferObject;
 using System;
 using System.Collections.Generic;
@@ -21,7 +23,20 @@ namespace Service
             return brandDtos;
 
         }
-        
+
+        public async Task<PaginatedResult<ProductDto>> GetProductsAsync(ProductQueryParams QueryParams)
+        {
+            var Repo = _unitOfWork.GetRepository<Product, int>();
+            var Specifications = new ProductWithBrandAndTypeSpeceificatio(QueryParams);
+            var Products = await Repo.GetAllAsync(Specifications);
+            var Data= _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(Products);
+            var productCount=Data.Count();
+            var CountSpec = new ProductCountSpeceification(QueryParams);
+            var TotalCount =await Repo.CountAsync(CountSpec);
+            return new PaginatedResult<ProductDto>(QueryParams.PageIndex, productCount, TotalCount, Data );
+           
+        }
+       
 
         public async Task<IEnumerable<TypeDto>> GetAllTypesAsync()
         {
@@ -36,10 +51,6 @@ namespace Service
             return _mapper.Map<Product, ProductDto>(product);
         }
 
-        public async Task<IEnumerable<ProductDto>> GetProductsAsync()
-        {
-            var Products =await _unitOfWork.GetRepository<Product, int>().GetAllAsync();
-           return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(Products);
-        }
+        
     }
 }
