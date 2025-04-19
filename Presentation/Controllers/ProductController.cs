@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ServiceAbstraction;
+using Shared;
 using Shared.DataTransferObject;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace Presentation.Controllers
     public class ProductController(IServiceManager serviceManager) :ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProduct(int ? BrandId , int ? TypeId)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProduct(int ? BrandId , int ? TypeId , ProductSortingOptions sortingOptions )
         {
-            var products =await serviceManager.productService.GetProductsAsync(BrandId , TypeId);
+            var products =await serviceManager.productService.GetProductsAsync(BrandId , TypeId , sortingOptions);
             return Ok(products);
         }
         [HttpGet("{id:int}")]
