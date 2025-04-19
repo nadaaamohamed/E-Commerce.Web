@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Presistence
 {
      static class SpeceificationEvaluator
-    {
+     {
         //Ctreat Query
         public static IQueryable<TEntity> CreateQuery<TEntity , TKey>(IQueryable<TEntity> InputQuery , ISpecifications<TEntity , TKey> specifications) where TEntity : BaseEntity<TKey>
         {
@@ -26,7 +26,7 @@ namespace Presistence
                 //{
                 //    query = query.Include(exp);
                 //}
-                query = specifications.IncludeExpressions.Aggregate(query, (currentquery, incluedExp) => currentquery.Include(incluedExp);
+                query = specifications.IncludeExpressions.Aggregate(query, (currentquery, incluedExp) => currentquery.Include(incluedExp));
             }
 
 
@@ -38,5 +38,5 @@ namespace Presistence
        
 
       
-    }
+     }
 }

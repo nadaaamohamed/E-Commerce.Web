@@ -11,7 +11,7 @@ namespace Service.Speceifications
 {
     abstract class BaseSpeceification<TEntity, TKey> : ISpecifications<TEntity, TKey> where TEntity : BaseEntity<TKey>
     {
-        protected BaseSpeceification(Expression<Func<TEntity, bool>> criteriaExp)
+        protected BaseSpeceification(Expression<Func<TEntity, bool>>? criteriaExp)
         {
             Criteria = criteriaExp;
         }

@@ -50,8 +50,10 @@ namespace E_Commerce.Web
                 app.MapControllers();
                 #endregion
 
-                app.Run();
             }
+            app.Run();
+
         }
+
     }
 }
