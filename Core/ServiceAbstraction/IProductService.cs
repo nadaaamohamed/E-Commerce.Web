@@ -10,7 +10,7 @@ namespace ServiceAbstraction
 {
     public interface IProductService
     {
-        Task  <IEnumerable <ProductDto>> GetProductsAsync(ProductQueryParams queryParams);
+        Task  <PaginatedResult <ProductDto>> GetProductsAsync(ProductQueryParams queryParams);
         Task<ProductDto> GetProductByIdAsync(int id);
         Task<IEnumerable<BrandDto>> GetAllBrandsAsync();
         Task<IEnumerable<TypeDto>> GetAllTypesAsync();
