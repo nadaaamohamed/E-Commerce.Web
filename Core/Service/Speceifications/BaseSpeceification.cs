@@ -25,11 +25,27 @@ namespace Service.Speceifications
         #region Include
         public List<Expression<Func<TEntity, object>>> IncludeExpressions { get; } = [];
 
+       
         protected void AddInclude(Expression<Func<TEntity, object>> IncludeExpression)
         {
             IncludeExpressions.Add(IncludeExpression);
-        } 
+        }
         #endregion
+        #region Pagination
+        public int Take { get; private set; }
+
+        public int Skip { get; private set; }
+
+        public bool IsPaginated { get; set; }
+        protected void ApplyPagination(int PageSize, int PageIndex)
+        {
+            IsPaginated = true;
+            Take = PageSize;
+            Skip =(PageIndex- 1) * PageSize;
+
+        }
+        #endregion
+
 
 
     }

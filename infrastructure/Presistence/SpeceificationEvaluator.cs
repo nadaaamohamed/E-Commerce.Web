@@ -31,11 +31,14 @@ namespace Presistence
             }   
             if (specifications.IncludeExpressions is not null && specifications.IncludeExpressions.Count > 0)
             {
-                //foreach(var exp in specifications.IncludeExpressions)
-                //{
-                //    query = query.Include(exp);
-                //}
-                query = specifications.IncludeExpressions.Aggregate(query, (currentquery, incluedExp) => currentquery.Include(incluedExp));
+                foreach (var includeExpression in specifications.IncludeExpressions)
+                {
+                    query = query.Include(includeExpression);
+                }
+            }
+            if (specifications.IsPaginated)
+            {
+                    query=query.Skip(specifications.Skip).Take(specifications.Take);
             }
 
 

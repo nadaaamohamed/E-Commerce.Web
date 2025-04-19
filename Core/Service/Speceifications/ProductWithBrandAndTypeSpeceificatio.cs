@@ -36,7 +36,13 @@ namespace Service.Speceifications
 
 
             }
+            ApplyPagination(queryParams.PageSize , queryParams.PageIndex);  
         }
 
+        public ProductWithBrandAndTypeSpeceificatio(int id) : base(p => p.Id == id)
+        {
+            AddInclude(x => x.ProductBrand);
+            AddInclude(x => x.ProductType);
+        }
     }
 }
