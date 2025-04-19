@@ -15,9 +15,9 @@ namespace Presentation.Controllers
     public class ProductController(IServiceManager serviceManager) :ControllerBase
     {
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProduct()
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProduct(int ? BrandId , int ? TypeId)
         {
-            var products =await serviceManager.productService.GetProductsAsync();
+            var products =await serviceManager.productService.GetProductsAsync(BrandId , TypeId);
             return Ok(products);
         }
         [HttpGet("{id:int}")]
