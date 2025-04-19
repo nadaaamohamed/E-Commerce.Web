@@ -10,7 +10,8 @@ namespace Service.Speceifications
 {
      class ProductWithBrandAndTypeSpeceificatio :BaseSpeceification<Product , int>
     {
-        public ProductWithBrandAndTypeSpeceificatio(ProductQueryParams queryParams) :base(p=>(!queryParams.BrandId.HasValue || p.BrandId==queryParams.BrandId) &&(!queryParams.TypeId.HasValue || p.TypeId== queryParams.TypeId)  )
+        public ProductWithBrandAndTypeSpeceificatio(ProductQueryParams queryParams) : base(p => (!queryParams.BrandId.HasValue || p.BrandId == queryParams.BrandId) && (!queryParams.TypeId.HasValue || p.TypeId == queryParams.TypeId
+        && string.IsNullOrWhiteSpace(queryParams.SearchValue) || p.Name.ToLower().Contains(queryParams.SearchValue.ToLower())))
         {
 
             AddInclude(x => x.ProductBrand);
