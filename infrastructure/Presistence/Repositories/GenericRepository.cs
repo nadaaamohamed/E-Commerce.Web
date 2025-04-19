@@ -28,17 +28,7 @@ namespace Presistence.Repositories
           return await _dbContext.Set<TEntity>().FindAsync(id);    
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity, TKey> specifications)
-        {
-          return await  SpeceificationEvaluator.CreateQuery(_dbContext.Set<TEntity> () , specifications).ToListAsync();
-
-        }
-
-        public async Task<TEntity?> GetByIdAsync(ISpecifications<TEntity, TKey> specifications)
-        {
-           return await SpeceificationEvaluator.CreateQuery(_dbContext.Set<TEntity>(), specifications).FirstOrDefaultAsync();   
-        }
-
+       
         public void Remove(TEntity entity)
         {
            _dbContext.Set<TEntity>().Remove(entity);
@@ -46,8 +36,29 @@ namespace Presistence.Repositories
 
         public void Update(TEntity entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Set<TEntity>().Update(entity);
         }
+
+        #region WithSpeceification
+        public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity, TKey> specifications)
+        {
+            return await SpeceificationEvaluator.CreateQuery(_dbContext.Set<TEntity>(), specifications).ToListAsync();
+
+        }
+
+        public async Task<TEntity?> GetByIdAsync(ISpecifications<TEntity, TKey> specifications)
+        {
+            return await SpeceificationEvaluator.CreateQuery(_dbContext.Set<TEntity>(), specifications).FirstOrDefaultAsync();
+        }
+
+
+        public async Task<int> CountAsync(ISpecifications<TEntity, TKey> specifications)
+        {
+            return await SpeceificationEvaluator.CreateQuery(_dbContext.Set<TEntity>() , specifications).CountAsync();
+        }
+
+        #endregion
+
     }
    
 }

@@ -16,6 +16,7 @@ namespace DomainLayer.Contarcts
         void Update(TEntity entity);
         void Remove(TEntity entity);
         Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<int> CountAsync(ISpecifications<TEntity , Tkey> specifications);
 
 
 
