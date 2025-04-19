@@ -20,19 +20,33 @@ namespace Presistence.Repositories
         {
             return await _dbContext.Set<TEntity>().ToListAsync();
         }
+
+       
+
         public async Task<TEntity?> GetByIdAsync(TKey id)
         {
           return await _dbContext.Set<TEntity>().FindAsync(id);    
         }
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync(ISpecifications<TEntity, TKey> specifications)
+        {
+          return await  SpeceificationEvaluator.CreateQuery(_dbContext.Set<TEntity> () , specifications).ToListAsync();
+
+        }
+
+        public async Task<TEntity?> GetByIdAsync(ISpecifications<TEntity, TKey> specifications)
+        {
+           return await SpeceificationEvaluator.CreateQuery(_dbContext.Set<TEntity>(), specifications).FirstOrDefaultAsync();   
+        }
+
         public void Remove(TEntity entity)
         {
            _dbContext.Set<TEntity>().Remove(entity);
         }
 
-  
         public void Update(TEntity entity)
         {
-           _dbContext.Set<TEntity>().Update(entity);    
+            throw new NotImplementedException();
         }
     }
    

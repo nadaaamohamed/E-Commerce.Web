@@ -11,13 +11,13 @@ namespace E_Commerce.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
 
             #region Add services to the container builder.Services.AddControllers();
-            builder.Services.AddControllers();  
+            builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -34,7 +34,7 @@ namespace E_Commerce.Web
 
             using var Scope = app.Services.CreateScope();
             var ObjectOfDataSeedind = Scope.ServiceProvider.GetRequiredService<IDataSeeding>();
-            ObjectOfDataSeedind.SeedDataAsync();
+            await ObjectOfDataSeedind.SeedDataAsync();
 
 
 
@@ -44,14 +44,14 @@ namespace E_Commerce.Web
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+
+                app.UseHttpsRedirection();
+                app.UseStaticFiles();
+                app.MapControllers();
+                #endregion
+
+                app.Run();
             }
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.MapControllers(); 
-            #endregion
-
-            app.Run();
         }
     }
 }
