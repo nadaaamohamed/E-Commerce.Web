@@ -1,5 +1,7 @@
 
+using Azure;
 using DomainLayer.Contarcts;
+using E_Commerce.Web.CustomMiddleWare;
 using Microsoft.EntityFrameworkCore;
 using Presistence;
 using Presistence.Data;
@@ -39,6 +41,14 @@ namespace E_Commerce.Web
 
 
             #region Configure the HTTP request pipeline.
+            //app.Use(async (RequestContext, NextMiddleWare) =>
+            //{
+            //    Console.WriteLine("Request Under Processing");
+            //   await  NextMiddleWare.Invoke();
+            //    Console.WriteLine("Waiting Responses");
+            //    Console.WriteLine(RequestContext.Response.Body);
+            //});
+            app.UseMiddleware<CustomExceptionHandlerMiddleWare>();
 
             if (app.Environment.IsDevelopment())
             {
