@@ -1,4 +1,5 @@
-﻿using Shared.ErrorModels;
+﻿using DomainLayer.Expections;
+using Shared.ErrorModels;
 using System.Net;
 using System.Text.Json;
 
@@ -26,12 +27,16 @@ namespace E_Commerce.Web.CustomMiddleWare
             {
                 _logger.LogError(ex , "An error occurred while processing the request.");
                 //httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                httpContext.Response.StatusCode = ex switch
+                {
+                    ProductNotFoundException => StatusCodes.Status404NotFound,
+                    _ => StatusCodes.Status500InternalServerError
+                };
                 httpContext.Response.ContentType = "application/json";
                 var ErrorResponse = new ErrorToReturn()
                 {
                     ErrorMessage = ex.Message,
-                    StatusCode = StatusCodes.Status500InternalServerError
+                    StatusCode = httpContext.Response.StatusCode
                 };
                 //var ResponseToReturn= JsonSerializer.Serialize(ErrorResponse);
 

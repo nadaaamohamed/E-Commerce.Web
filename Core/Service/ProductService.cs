@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using DomainLayer.Contarcts;
+using DomainLayer.Expections;
 using DomainLayer.Models;
 using Service.Speceifications;
 using ServiceAbstraction;
@@ -47,7 +48,14 @@ namespace Service
 
         public async Task<ProductDto> GetProductByIdAsync(int id)
         {
-            var product =await _unitOfWork.GetRepository<Product, int>().GetByIdAsync(id);
+            var Specifications = new ProductWithBrandAndTypeSpeceificatio(id);
+            var product =await _unitOfWork.GetRepository<Product, int>().GetByIdAsync(Specifications);
+            if(product == null)
+            {
+                throw new ProductNotFoundException(id);
+            }
+            
+                
             return _mapper.Map<Product, ProductDto>(product);
         }
 
