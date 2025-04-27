@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using AutoMapper.Execution;
-using DomainLayer.Models;
 using Shared.DataTransferObject;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using DomainLayer.Models.ProductsModule;
 
 namespace Service.MappingProfiles
 {

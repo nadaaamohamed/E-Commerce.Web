@@ -1,5 +1,5 @@
 ﻿using DomainLayer.Contarcts;
-using DomainLayer.Models;
+using DomainLayer.Models.ProductsModule;
 using System.Linq.Expressions;
 
 namespace Service.Speceifications

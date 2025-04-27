@@ -1,4 +1,4 @@
-﻿using DomainLayer.Models;
+﻿using DomainLayer.Models.ProductsModule;
 using Shared;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Service.Speceifications
 {
-     class ProductWithBrandAndTypeSpeceificatio :BaseSpeceification<Product , int>
+    class ProductWithBrandAndTypeSpeceificatio :BaseSpeceification<Product , int>
     {
         public ProductWithBrandAndTypeSpeceificatio(ProductQueryParams queryParams) : base(p => (!queryParams.BrandId.HasValue || p.BrandId == queryParams.BrandId) && (!queryParams.TypeId.HasValue || p.TypeId == queryParams.TypeId
         && string.IsNullOrWhiteSpace(queryParams.SearchValue) || p.Name.ToLower().Contains(queryParams.SearchValue.ToLower())))

@@ -1,5 +1,5 @@
 ﻿using DomainLayer.Contarcts;
-using DomainLayer.Models;
+using DomainLayer.Models.ProductsModule;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Presistence
 {
-     static class SpeceificationEvaluator
+    static class SpeceificationEvaluator
      {
         //Ctreat Query
         public static IQueryable<TEntity> CreateQuery<TEntity , TKey>(IQueryable<TEntity> InputQuery , ISpecifications<TEntity , TKey> specifications) where TEntity : BaseEntity<TKey>

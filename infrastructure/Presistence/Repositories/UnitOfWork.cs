@@ -1,5 +1,5 @@
 ﻿using DomainLayer.Contarcts;
-using DomainLayer.Models;
+using DomainLayer.Models.ProductsModule;
 using Presistence.Data;
 using System;
 using System.Collections.Generic;
