@@ -1,41 +1,22 @@
 
-using DomainLayer.Contarcts;
-using Microsoft.EntityFrameworkCore;
-using Presistence;
-using Presistence.Data;
-using Presistence.Repositories;
-using Service;
-using ServiceAbstraction;
-
 namespace E_Commerce.Web
 {
     public class Program
     {
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
 
             #region Add services to the container builder.Services.AddControllers();
-            builder.Services.AddControllers();
+            builder.Services.AddControllers();  
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddDbContext<StoreDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            builder.Services.AddScoped<IDataSeeding, DataSeeding>();
-            builder.Services.AddScoped<IUintOfWork, UnitOfWork>();
-            builder.Services.AddAutoMapper(typeof(Service.AssmeplyReference).Assembly);
-            builder.Services.AddScoped<IServiceManager, ServiceManager>();
             #endregion
 
 
             var app = builder.Build();
-
-            using var Scope = app.Services.CreateScope();
-            var ObjectOfDataSeedind = Scope.ServiceProvider.GetRequiredService<IDataSeeding>();
-            await ObjectOfDataSeedind.SeedDataAsync();
-
 
 
             #region Configure the HTTP request pipeline.
@@ -44,16 +25,13 @@ namespace E_Commerce.Web
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
-
-                app.UseHttpsRedirection();
-                app.UseStaticFiles();
-                app.MapControllers();
-                #endregion
-
             }
+
+            app.UseHttpsRedirection();
+            app.MapControllers(); 
+            #endregion
+
             app.Run();
-
         }
-
     }
 }
