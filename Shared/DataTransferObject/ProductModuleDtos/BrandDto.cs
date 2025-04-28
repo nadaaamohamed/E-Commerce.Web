@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared.DataTransferObject
+namespace Shared.DataTransferObject.ProductModuleDtos
 {
-    public class TypeDto
+    public class BrandDto
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;
-        
     }
 }

@@ -1,11 +1,17 @@
 
+using Azure;
 using DomainLayer.Contarcts;
+using E_Commerce.Web.CustomMiddleWare;
+using E_Commerce.Web.Extentions;
+using E_Commerce.Web.Factories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Presistence;
 using Presistence.Data;
 using Presistence.Repositories;
 using Service;
 using ServiceAbstraction;
+using Shared.ErrorModels;
 
 namespace E_Commerce.Web
 {
@@ -19,38 +25,43 @@ namespace E_Commerce.Web
             #region Add services to the container builder.Services.AddControllers();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddDbContext<StoreDbContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            builder.Services.AddScoped<IDataSeeding, DataSeeding>();
-            builder.Services.AddScoped<IUintOfWork, UnitOfWork>();
-            builder.Services.AddAutoMapper(typeof(Service.AssmeplyReference).Assembly);
-            builder.Services.AddScoped<IServiceManager, ServiceManager>();
+            builder.Services.AddSwaggerServcies();    
+            builder.Services.AddInferaStructureServices(builder.Configuration);
+            builder.Services.AddApplicationServices();
+            builder.Services.AddWepApplicationServices();
+
+
             #endregion
 
 
             var app = builder.Build();
 
-            using var Scope = app.Services.CreateScope();
-            var ObjectOfDataSeedind = Scope.ServiceProvider.GetRequiredService<IDataSeeding>();
-            await ObjectOfDataSeedind.SeedDataAsync();
+             await app.SeedDataBaseAsync();
 
 
 
             #region Configure the HTTP request pipeline.
+            //app.Use(async (RequestContext, NextMiddleWare) =>
+            //{
+            //    Console.WriteLine("Request Under Processing");
+            //   await  NextMiddleWare.Invoke();
+            //    Console.WriteLine("Waiting Responses");
+            //    Console.WriteLine(RequestContext.Response.Body);
+            //});
 
+            app.UseCustomExceptionMiddleWare();
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerMiddleWares();
+            }
 
                 app.UseHttpsRedirection();
                 app.UseStaticFiles();
                 app.MapControllers();
+            
                 #endregion
 
-            }
+            
             app.Run();
 
         }
